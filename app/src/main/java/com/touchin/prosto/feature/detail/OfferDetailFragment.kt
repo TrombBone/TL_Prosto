@@ -24,7 +24,7 @@ class OfferDetailFragment : BaseContentBottom<OfferDetailState, OfferDetailViewM
 
     override fun render(state: OfferDetailState, controller: OfferDetailController) {
         with(binding) {
-            infoContainer.background = GradientDrawable(
+            gradientBackground.background = GradientDrawable(
                 state.offer.backgroundFirstColor,
                 state.offer.backgroundSecondColor
             )
