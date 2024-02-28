@@ -32,7 +32,7 @@ class OfferDetailFragment : BaseContentBottom<OfferDetailState, OfferDetailViewM
             )
             mainInfo.initView(state.offer)
             headerView.initView(state.offer) {
-                createViewModelLazy().value.onClickFavorite()
+                controller.onClickFavorite()
                 setFragmentResult(REQUEST_KEY, bundleOf(getString(R.string.key_offer) to state.offer))
             }
             offerName.text = state.offer.name
