@@ -1,5 +1,7 @@
 package com.touchin.prosto.feature.detail
 
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
 import com.anadolstudio.core.viewbinding.viewBinding
 import com.touchin.prosto.R
@@ -24,14 +26,21 @@ class OfferDetailFragment : BaseContentBottom<OfferDetailState, OfferDetailViewM
 
     override fun render(state: OfferDetailState, controller: OfferDetailController) {
         with(binding) {
-            infoContainer.background = GradientDrawable(
+            gradientBackground.background = GradientDrawable(
                 state.offer.backgroundFirstColor,
                 state.offer.backgroundSecondColor
             )
             mainInfo.initView(state.offer)
-            headerView.initView(state.offer) { _ -> }
+            headerView.initView(state.offer) {
+                createViewModelLazy().value.onClickFavorite()
+                setFragmentResult(REQUEST_KEY, bundleOf(getString(R.string.key_offer) to state.offer))
+            }
             offerName.text = state.offer.name
             offerLongDescription.text = state.offer.longDescription
         }
+    }
+
+    companion object {
+        const val REQUEST_KEY = "OFFER_DETAIL"
     }
 }
