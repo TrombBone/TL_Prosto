@@ -12,7 +12,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 
 fun View.makeGone() {
-    this.visibility = View.GONE
+    this.visibility = View.VISIBLE
+
 }
 
 fun View.makeVisible() {

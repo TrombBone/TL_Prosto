@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorSecondary"
@@ -32,12 +33,13 @@
         android:id="@+id/offer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_min="196dp"
         app:layout_constraintBottom_toTopOf="@+id/support_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:text="@string/common_offers"
-        app:src="@drawable/ic_offer" />
+        app:layout_constraintWidth_min="196dp"
+        app:src="@drawable/ic_offer"
+        app:text="@string/common_offers" />
 
     <com.touchin.prosto.view.StartButton
         android:id="@+id/support_button"
@@ -49,15 +51,18 @@
         app:layout_constraintTop_toTopOf="@+id/guideline"
         app:text="@string/common_support"
         app:src="@drawable/ic_support" />
-    
+
     <ImageButton
         android:id="@+id/night_btn"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="@dimen/padding_main"
+        android:adjustViewBounds="false"
         android:background="@drawable/bg_oval"
-        android:src="@drawable/ic_mode_dark"
         android:elevation="@dimen/elevation_normal"
+        android:saveEnabled="false"
+        android:src="@drawable/ic_mode_dark"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/support_button" />
