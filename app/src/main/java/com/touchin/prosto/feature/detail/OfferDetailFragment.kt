@@ -1,7 +1,8 @@
 package com.touchin.prosto.feature.detail
 
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
-import com.anadolstudio.core.presentation.event.SingleMessageSnack
 import com.anadolstudio.core.viewbinding.viewBinding
 import com.touchin.prosto.R
 import com.touchin.prosto.base.bottom.BaseContentBottom
@@ -30,11 +31,16 @@ class OfferDetailFragment : BaseContentBottom<OfferDetailState, OfferDetailViewM
                 state.offer.backgroundSecondColor
             )
             mainInfo.initView(state.offer)
-            headerView.initView(state.offer) {}
+            headerView.initView(state.offer) {
+                createViewModelLazy().value.onClickFavorite()
+                setFragmentResult(REQUEST_KEY, bundleOf(getString(R.string.key_offer) to state.offer))
+            }
             offerName.text = state.offer.name
             offerLongDescription.text = state.offer.longDescription
         }
-        if (!state.offer.isActive)
-            eventableDelegate.showMessageSnackbar(SingleMessageSnack.Long(getString(R.string.offer_error)))
+    }
+
+    companion object {
+        const val REQUEST_KEY = "OFFER_DETAIL"
     }
 }
