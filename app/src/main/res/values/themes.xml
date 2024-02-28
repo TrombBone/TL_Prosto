@@ -8,6 +8,7 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorSecondary</item>
+        <item name="android:fillColor">@color/colorAccent</item>
     </style>
 
     <style name="Theme.TicTacToe" parent="Base.Theme.TicTacToe" />

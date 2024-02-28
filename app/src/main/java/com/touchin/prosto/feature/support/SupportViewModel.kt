@@ -30,11 +30,12 @@ class SupportViewModel @Inject constructor(
 
 
     private fun hasErrors(): Boolean {
-        val russianOnlyRegex = Regex("[а-яА-Я]+")
-        val hasSubjectError = !russianOnlyRegex.matches(state.subjectText)
+        val russianOnlyRegex = Regex("[a-zA-Z]")
+
+        val hasSubjectError = russianOnlyRegex.find(state.subjectText) != null
         updateState { copy(hasSubjectError = hasSubjectError) }
 
-        val hasBodyError = !russianOnlyRegex.matches(state.textPism)
+        val hasBodyError = russianOnlyRegex.find(state.textPism) != null
         updateState { copy(hasBodyError = hasBodyError) }
 
         val hasEmailError = !EmailUtil.EMAIL_PATTERN_REGEX.matches(state.emailText)
