@@ -1,8 +1,12 @@
 package com.touchin.prosto.feature.list
 
+import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import com.anadolstudio.core.presentation.fragment.state_util.ViewStateDelegate
 import com.anadolstudio.core.viewbinding.viewBinding
+import com.anadolstudio.core.viewmodel.lce.LceState
 import com.touchin.prosto.R
 import com.touchin.prosto.base.fragment.BaseContentFragment
 import com.touchin.prosto.databinding.FragmentOfferListBinding
@@ -12,6 +16,7 @@ import com.touchin.prosto.feature.model.OfferUi
 import com.touchin.prosto.util.postUpdate
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
+import kotlinx.coroutines.flow.onEach
 
 class OfferListFragment : BaseContentFragment<OfferListState, OfferListViewModel, OfferListController>(
     R.layout.fragment_offer_list
@@ -19,12 +24,20 @@ class OfferListFragment : BaseContentFragment<OfferListState, OfferListViewModel
 
     private val binding by viewBinding { FragmentOfferListBinding.bind(it) }
     private val offersSection = Section()
+    private val viewStateDelegate by lazy {
+        ViewStateDelegate(
+            contentView = binding.recycler,
+            loadingView = null,//todo
+            errorView = binding.errorLoadedLayout
+        )
+    }
 
     override fun createViewModelLazy() = viewModels<OfferListViewModel> { viewModelFactory }
 
     override fun initView(controller: OfferListController) = with(binding) {
         toolbar.setBackClickListener { controller.onBackClicked() }
         favoriteButton.setOnClickListener { controller.onFavoriteFilterClicked() }
+        reloadedButton.setOnClickListener { controller.onReloadedClicked() }
 
         setFragmentResultListener(REQUEST_KEY) { _, bundle ->
             val newItem = bundle.getParcelable<OfferUi>(getString(R.string.key_offer))
@@ -45,7 +58,22 @@ class OfferListFragment : BaseContentFragment<OfferListState, OfferListViewModel
     }
 
     override fun render(state: OfferListState, controller: OfferListController) {
-        offersSection.postUpdate(binding.recycler, state.offersList.map { createOfferHolder(it) })
+        when(state.loadingState) {
+            is LceState.Content -> {
+                offersSection.postUpdate(binding.recycler, state.offersFilteredList.map { createOfferHolder(it) })
+                binding.favoriteButton.isVisible = state.isFavoriteFilterVisibility
+                viewStateDelegate.showContent()
+            }
+            LceState.Loading -> {
+                //
+                viewStateDelegate.showLoading()
+
+            }
+            is LceState.Error -> {
+                viewStateDelegate.showError()
+            }
+            else -> {}
+        }
     }
 
     protected fun createOfferHolder(offer: OfferUi): BigOfferCardHolder = BigOfferCardHolder(

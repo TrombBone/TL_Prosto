@@ -12,5 +12,8 @@
     <string name="offer_error">Эта акция больше неактивна</string>
     <string name="key_offer">offer_detail_to_list</string>
 
+    <string name="not_loaded_error">Не удалось загрузить данные.\nПовторите позже</string>
+    <string name="reloaded_button">ПОВТОРИТЬ</string>
+
     <string name="navigation_offer">offer</string>
 </resources>
