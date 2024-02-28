@@ -41,7 +41,7 @@ class BaseToolbar @JvmOverloads constructor(
             }
 
             setTextAppearance(getResourceId(R.styleable.BaseToolbar_textAppearance, NO_RESOURCE))
-            setTintColor(getColor(R.styleable.BaseToolbar_tint, Color.BLACK))
+//            setTintColor(getColor(R.styleable.BaseToolbar_tint, Color.BLACK))
         }
     }
 

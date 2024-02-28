@@ -2,6 +2,7 @@ package com.touchin.prosto.feature.list
 
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.anadolstudio.core.presentation.fragment.state_util.ViewStateDelegate
 import com.anadolstudio.core.viewbinding.viewBinding
@@ -9,6 +10,7 @@ import com.anadolstudio.core.viewmodel.lce.LceState
 import com.touchin.prosto.R
 import com.touchin.prosto.base.fragment.BaseContentFragment
 import com.touchin.prosto.databinding.FragmentOfferListBinding
+import com.touchin.prosto.feature.detail.OfferDetailFragment.Companion.REQUEST_KEY
 import com.touchin.prosto.feature.list.recycler.BigOfferCardHolder
 import com.touchin.prosto.feature.model.OfferUi
 import com.touchin.prosto.util.postUpdate
@@ -36,6 +38,14 @@ class OfferListFragment : BaseContentFragment<OfferListState, OfferListViewModel
         toolbar.setBackClickListener { controller.onBackClicked() }
         favoriteButton.setOnClickListener { controller.onFavoriteFilterClicked() }
         reloadedButton.setOnClickListener { controller.onReloadedClicked() }
+
+        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
+            val newItem = bundle.getParcelable<OfferUi>(getString(R.string.key_offer))
+            if (newItem != null) {
+                controller.onFavoriteChecked(newItem)
+            }
+        }
+
         initRecycler()
     }
 
