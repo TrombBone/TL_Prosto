@@ -1,6 +1,8 @@
 package com.touchin.prosto.feature.detail
 
+import android.content.Context
 import com.anadolstudio.core.presentation.event.SingleMessageSnack
+import com.touchin.prosto.R
 import com.touchin.prosto.base.viewmodel.BaseContentViewModel
 import com.touchin.prosto.base.viewmodel.navigateUp
 import com.touchin.prosto.feature.model.OfferUi
@@ -10,7 +12,8 @@ import dagger.assisted.AssistedInject
 
 @Suppress("TooManyFunctions", "LongParameterList")
 class OfferDetailViewModel @AssistedInject constructor(
-    @Assisted offerUi: OfferUi
+    @Assisted offerUi: OfferUi,
+    context: Context
 ) : BaseContentViewModel<OfferDetailState>(
     initState = OfferDetailState(
         offer = offerUi
@@ -23,7 +26,7 @@ class OfferDetailViewModel @AssistedInject constructor(
 
     init {
         if (_stateLiveData.value?.offer?.isActive == false)
-            showEvent(SingleMessageSnack.Short("Эта акция больше неактивна"))
+            showEvent(SingleMessageSnack.Short(context.getString(R.string.offer_error)))
     }
 
     fun onClickFavorite() {
