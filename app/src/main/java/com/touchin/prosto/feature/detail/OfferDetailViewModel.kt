@@ -29,7 +29,7 @@ class OfferDetailViewModel @AssistedInject constructor(
             showEvent(SingleMessageSnack.Short(context.getString(R.string.offer_error)))
     }
 
-    fun onClickFavorite() {
+    override fun onClickFavorite() {
         _stateLiveData.value?.let {
             val newOffer = it.offer.copy(isFavorite = !it.offer.isFavorite)
             _stateLiveData.value = _stateLiveData.value!!.copy(offer = newOffer)
